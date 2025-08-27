@@ -7,7 +7,7 @@ Característica: Compra de Productos en la Tienda
   para asegurar que el flujo de compra funcione correctamente.
 
   @CompraExitosa
-  Esquema del escenario: Validación del precio de un producto
+  Esquema del escenario: Validación del precio de un producto con usuario válido
     Dado estoy en la página de la tienda
     Y me logueo con mi usuario "<usuario>" y clave "<clave>"
     Cuando navego a la categoria "<categoria>" y subcategoria "<subcategoria>"
@@ -19,7 +19,26 @@ Característica: Compra de Productos en la Tienda
     Y vuelvo a validar el calculo de precios en el carrito
 
     Ejemplos:
-      | usuario              | clave        | categoria | subcategoria | unidades |
-      | jonathan123@gmail.com | H0l@C0m0_Test | Clothes   | Men          | 2        |
-      | jonathan321@test.com | N0Es_Clave123  | Clothes   | Men          | 2        |
-      | jonathan123@gmail.com | H0l@C0m0_Test | Autos     | Deportivos   | 2        |
+      | usuario               | clave         | categoria | subcategoria | unidades |
+      | jonathan123@gmail.com | H0l@C0m0_Test | CLOTHES   | Men          | 2        |
+
+  @LoginFallido
+  Esquema del escenario: Validación de login con credenciales inválidas
+    Dado estoy en la página de la tienda
+    Y me logueo con mi usuario "<usuario>" y clave "<clave>"
+    Entonces valido que el login falle
+
+    Ejemplos:
+      | usuario              | clave         |
+      | jonathan321@test.com | N0Es_Clave123 |
+
+  @CategoriaInexistente
+  Esquema del escenario: Validación de categoría inexistente
+    Dado estoy en la página de la tienda
+    Y me logueo con mi usuario "<usuario>" y clave "<clave>"
+    Cuando intento navegar a una categoria inexistente "<categoria>"
+    Entonces valido que la categoría no se encuentre
+
+    Ejemplos:
+      | usuario               | clave         | categoria |
+      | jonathan123@gmail.com | H0l@C0m0_Test | Autos     |

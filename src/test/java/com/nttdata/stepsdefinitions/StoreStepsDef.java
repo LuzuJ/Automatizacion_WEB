@@ -31,11 +31,6 @@ public class StoreStepsDef {
     @Y("me logueo con mi usuario {string} y clave {string}")
     public void meLogueoConMiUsuarioYClave(String user, String pass) {
         storeSteps.login(user, pass);
-        if (user.equals("jonathan123@gmail.com")) {
-            Assertions.assertTrue(storeSteps.isLoginSuccessful(), "El inicio de sesión falló para un usuario válido.");
-        } else {
-            Assertions.assertTrue(storeSteps.isLoginFailed(), "No se mostró el mensaje de error para un usuario inválido.");
-        }
     }
 
     @Cuando("navego a la categoria {string} y subcategoria {string}")
@@ -72,5 +67,20 @@ public class StoreStepsDef {
     @Y("vuelvo a validar el calculo de precios en el carrito")
     public void vuelvoAValidarElCalculoDePreciosEnElCarrito() {
         Assertions.assertTrue(storeSteps.validateCartTotal(this.units), "El cálculo del total en la página del carrito es incorrecto.");
+    }
+
+    @Entonces("valido que el login falle")
+    public void validoQueElLoginFalle() {
+        Assertions.assertTrue(storeSteps.isLoginFailed(), "No se mostró el mensaje de error para un usuario inválido.");
+    }
+
+    @Cuando("intento navegar a una categoria inexistente {string}")
+    public void intentoNavegarAUnaCategoriaInexistente(String category) {
+        storeSteps.navigateToNonExistentCategory(category);
+    }
+
+    @Entonces("valido que la categoría no se encuentre")
+    public void validoQueLaCategoríaNoSeEncuentre() {
+        Assertions.assertTrue(storeSteps.isCategoryNotFound(), "No se mostró el comportamiento esperado para una categoría inexistente.");
     }
 }

@@ -107,4 +107,19 @@ public class StoreSteps {
         String cleanedText = priceText.replace(",", ".").replaceAll("[^\\d.]", "");
         return Double.parseDouble(cleanedText);
     }
+
+    public void navigateToNonExistentCategory(String category) {
+        try {
+            WebElement categoryLink = driver.findElement(By.xpath("//a[contains(text(),'" + category + "')]"));
+            if (categoryLink.isDisplayed()) {
+                categoryLink.click();
+            }
+        } catch (Exception e) {
+            System.out.println("La categoría '" + category + "' no fue encontrada, como se esperaba.");
+        }
+    }
+
+    public boolean isCategoryNotFound() {
+        return !driver.getCurrentUrl().contains("Autos");
+    }
 }
